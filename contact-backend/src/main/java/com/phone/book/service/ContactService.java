@@ -27,7 +27,7 @@ public class ContactService {
 
     public ContactResponse getContactById(Long id) {
         Contacts contact = contactRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + id));
         return mapToResponse(contact);
     }
 
@@ -42,7 +42,7 @@ public class ContactService {
     public ContactResponse updateContact(Long id, ContactRequest request) {
         validateContactRequest(request);
         Contacts contact = contactRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + id));
 
         updateContactFields(contact, request);
         return mapToResponse(contactRepository.save(contact));
@@ -50,23 +50,23 @@ public class ContactService {
 
     public void deleteContact(Long id) {
         if (!contactRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Contact not found with id: " + id);
+            throw new RuntimeException("Contact not found with id: " + id);
         }
         contactRepository.deleteById(id);
     }
 
     private void validateContactRequest(ContactRequest request) {
         if (request.getFirstname() == null || request.getFirstname().trim().isEmpty()) {
-            throw new InvalidContactException("First name is required");
+            throw new RuntimeException("First name is required");
         }
         if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
-            throw new InvalidContactException("Email is required");
+            throw new RuntimeException("Email is required");
         }
         if (!isValidEmail(request.getEmail())) {
-            throw new InvalidContactException("Email format is invalid");
+            throw new RuntimeException("Email format is invalid");
         }
         if (request.getPhone() == null || request.getPhone().trim().isEmpty()) {
-            throw new InvalidContactException("Phone number is required");
+            throw new RuntimeException("Phone number is required");
         }
     }
 
