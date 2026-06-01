@@ -592,4 +592,4 @@ For issues, questions, or suggestions:
 
 ---
 
-Made with ❤️ by [Sai Krishna uggi](https://github.com/saikrishnauggi)
+Made with ❤️ by [Sai Krishna Uggi](https://github.com/saikrishnauggi)
